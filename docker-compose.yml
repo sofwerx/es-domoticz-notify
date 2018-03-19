@@ -1,0 +1,12 @@
+version: '2.1'
+
+services:
+
+  es-domoticz-notify:
+    build: .
+    image: local/es-domoticz-notify
+    container_name: es-domoticz-notify
+    hostname: es-domoticz-notify
+    ports:
+      - 3000:3000
+
