@@ -41,11 +41,17 @@ app.post('/', jsonParser, (request, response) => {
   var now = new Date()
   var yyyymmdd = now.toISOString().substring(0, 10);
 
+  var payload = request.body;
+  if(payload && ! payload.timestamp) {
+    payload.timestamp = now;
+  }
+  payload.host = "domoticz";
+
   es.index({
     index: `domoticz-${yyyymmdd}`,
     type: 'notification',
     id: `${now}`,
-    body: request.body
+    body: payload
   }, function (err, resp) {
     if(err) {
       var pretty = JSON.stringify(resp, null, 4)
